@@ -11,3 +11,5 @@ Noget spændende at se i mine benchmarks, var at KDTree mister sin effektivitet 
 Det sker fordi, at mine seeker boids desværre ender i tættte sværme omkring food, da det ikke forsvinder. Derfor kommer KDTree meget tættere på O(n^2) her. 
 Udover det viste KDTree sig til at være betydeligt bedre end den Naive.
 ![alt text](image.png)
+
+50/50 og 33/33/33 skal forstås som fordelingen af boids typer.
