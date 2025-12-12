@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface BehaviorStrategy {
     Forces calculateForces(Boid boid, List<Boid> neighbors);
+    FlockWeights getFlockWeights();
 }

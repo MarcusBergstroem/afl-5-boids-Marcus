@@ -1,5 +1,6 @@
 package main.simulation;
 
+import main.behavior.*;
 import main.model.Boid;
 import main.model.BoidType;
 import main.spatial.*;
@@ -26,14 +27,27 @@ public class FlockSimulation {
     }
 
     public void addBoid() {
-        addBoid(BoidType.STANDARD);
+        addBoid(BoidType.STANDARD, new FlockBehavior());
+        addBoid(BoidType.AVOIDS, new AvoidanceBehavior());
+        addBoid(BoidType.SEEKS, new SeeksBehavior());
     }
 
     public void addBoid(BoidType type) {
+        BehaviorStrategy behavior;
+        switch (type) {
+            case AVOIDS -> behavior = new AvoidanceBehavior();
+            case SEEKS -> behavior = new SeeksBehavior();
+            case STANDARD -> behavior = new FlockBehavior();
+            default -> behavior = new FlockBehavior();
+        }
+        addBoid(type, behavior);
+    }
+
+    public void addBoid(BoidType type, BehaviorStrategy behavior) {
         int id = boids.size();
         double x = Math.random() * width;
         double y = Math.random() * height;
-        boids.add(new Boid(id, x, y, type));
+        boids.add(new Boid(id, x, y, type, behavior));
     }
 
     public void setBoidCount(int count) {
@@ -46,7 +60,7 @@ public class FlockSimulation {
         
         for (int i = 0; i < boids.size(); i++) {
             Boid oldBoid = boids.get(i);
-            boids.set(i, new Boid(i, oldBoid.getX(), oldBoid.getY(), oldBoid.getType()));
+            boids.set(i, new Boid(i, oldBoid.getX(), oldBoid.getY(), oldBoid.getType(), oldBoid.getBehavior()));
         }
     }
 

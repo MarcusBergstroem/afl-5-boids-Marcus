@@ -1,6 +1,8 @@
 package main.ui;
 
+import main.behavior.SeeksBehavior;
 import main.model.Boid;
+import main.model.Food;
 import main.simulation.FlockSimulation;
 import main.spatial.*;
 import javax.swing.*;
@@ -93,7 +95,7 @@ public class BoidPanel extends JPanel implements ActionListener {
         
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
         controlPanel.setPreferredSize(new Dimension(PANEL_WIDTH, CONTROL_HEIGHT));
-        controlPanel.setBackground(Color.DARK_GRAY);
+        controlPanel.setBackground(Color.WHITE);
         controlPanel.add(new JLabel("Boids:"));
         controlPanel.add(boidCountSlider);
         controlPanel.add(new JLabel("Radius:"));
@@ -139,6 +141,11 @@ public class BoidPanel extends JPanel implements ActionListener {
         List<Boid> boids = simulation.getBoids();
         for (Boid boid : boids) {
             boid.render(g2d);
+        }
+
+        List<Food> foods = SeeksBehavior.getFoods();
+        for (Food food : foods) {
+            food.render(g2d);
         }
         
         g2d.dispose();
